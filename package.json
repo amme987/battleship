@@ -8,6 +8,6 @@
     },
     "scripts": {
         "test": "jest",
-        "watch": "jest --watch *.js"
+        "watch": "jest --watchAll"
     }
 }
