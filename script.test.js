@@ -44,5 +44,6 @@ describe('Gameboard', () => {
 
     board.receiveAttack([9, 0]);
     expect(ship2.hits).toBe(1);
+    expect(board.gameboard[9][0]).toBe(true);
   });
 });

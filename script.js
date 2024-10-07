@@ -30,7 +30,7 @@ export class Gameboard {
       }
     } else if (y + ship.length < 10) {
       for (let i = 0; i < ship.length; i++) {
-        this.gameboard[x][y] = ship;
+        this.gameboard[x][y + i] = ship;
       }
     }
   }
@@ -42,6 +42,7 @@ export class Gameboard {
       this.gameboard[x][y] = false;
     } else {
       this.gameboard[x][y].hit();
+      this.gameboard[x][y] = true;
     }
   }
 }
