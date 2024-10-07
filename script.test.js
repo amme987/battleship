@@ -18,7 +18,7 @@ describe('Ship', () => {
 
 describe('Gameboard', () => {
   let ship = new Ship(3);
-  let ship2 = new Ship(4);
+  let ship2 = new Ship(2);
   let board = new Gameboard();
 
   test('create board', () => {
@@ -45,5 +45,16 @@ describe('Gameboard', () => {
     board.receiveAttack([9, 0]);
     expect(ship2.hits).toBe(1);
     expect(board.gameboard[9][0]).toBe(true);
+  });
+
+  test('all sunk', () => {
+    expect(board.allSunk()).toBe('not all sunk');
+
+    board.receiveAttack([9, 1]);
+    board.receiveAttack([0, 5]);
+    board.receiveAttack([1, 5]);
+    board.receiveAttack([2, 5]);
+
+    expect(board.allSunk()).toBe('all sunk');
   });
 });

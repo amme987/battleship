@@ -45,4 +45,13 @@ export class Gameboard {
       this.gameboard[x][y] = true;
     }
   }
+
+  // Report whether or not all ships have been sunk
+  allSunk() {
+    if (this.gameboard.flat().some(obj => obj instanceof Ship)) {
+      return 'not all sunk';
+    } else {
+      return 'all sunk';
+    }
+  }
 }
