@@ -1,4 +1,4 @@
-import { Ship, Gameboard, Player } from './script';
+import { Ship, Gameboard, Player } from './objects';
 
 describe('Ship', () => {
   let ship = new Ship(3);
