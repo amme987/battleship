@@ -1,4 +1,4 @@
-import { Ship, Gameboard } from './script';
+import { Ship, Gameboard, Player } from './script';
 
 describe('Ship', () => {
   let ship = new Ship(3);
@@ -57,4 +57,9 @@ describe('Gameboard', () => {
 
     expect(board.allSunk()).toBe('all sunk');
   });
+});
+
+test('player', () => {
+  let player = new Player('Emma');
+  expect(player.name).toBe('Emma');
 });
