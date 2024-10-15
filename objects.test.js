@@ -57,6 +57,12 @@ describe('Gameboard', () => {
 
     expect(board.allSunk()).toBe('all sunk');
   });
+
+  test('automatically place ships', () => {
+    let autoShip = new Ship(4);
+    board.autoPlaceShips(autoShip);
+    console.log(board.gameboard);
+  });
 });
 
 test('player', () => {
