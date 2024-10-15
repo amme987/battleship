@@ -25,44 +25,40 @@ export class Gameboard {
   autoPlaceShips(ship) {
     let range = 11 - ship.length;
     let horizontal = Math.random() < 0.5;
+    console.log(horizontal);
 
     // 0-range exclusive
     let row = Math.floor(Math.random() * range);
     let col = Math.floor(Math.random() * range);
 
-    console.log(horizontal);
     console.log(row);
     console.log(col);
 
-    if (horizontal && this.emptySpace(row, col, horizontal, ship.length)) {
-      for (let i = 0; i < ship.length; i++) {
-        this.gameboard[row + i][col] = ship;
-      }
-    } else {
-      if (this.emptySpace(row, col, false, ship.length)) {
-        for (let i = 0; i < ship.length; i++) {
-          this.gameboard[row][col + i] = ship;
-        }
+    if (this.canPlaceShip([row, col], horizontal, ship)) {
+      if (horizontal) {
+        this.placeShip([row, col], true, ship);
+      } else {
+        this.placeShip([row, col], false, ship);
       }
     }
   }
 
-  placeShip([x, y], ship) {
+  placeShip([x, y], orientation, ship) {
     for (let i = 0; i < ship.length; i++) {
-      if (x + ship.length < 10) {
+      if (orientation) {
         this.gameboard[x + i][y] = ship;
-      } else if (y + ship.length < 10) {
+      } else {
         this.gameboard[x][y + i] = ship;
       }
     }
   }
 
   // Make sure ship isn't placed on top of existing ship
-  emptySpace(row, col, orientation, length) {
-    for (let i = 0; i < length; i++) {
-      if (orientation && this.gameboard[row + i][col].length !== 0) {
+  canPlaceShip([x, y], orientation, ship) {
+    for (let i = 0; i < ship.length; i++) {
+      if (orientation && this.gameboard[x + i][y].length !== 0) {
         return false;
-      } else if (this.gameboard[row][col + i].length !== 0) {
+      } else if (this.gameboard[x][y + i].length !== 0) {
         return false;
       }
     }

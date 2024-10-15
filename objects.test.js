@@ -27,13 +27,13 @@ describe('Gameboard', () => {
   });
 
   test('place ship horizontally', () => {
-    board.placeShip([0, 5], ship);
+    board.placeShip([0, 5], true, ship);
     expect(board.gameboard[0][5]).toMatchObject(ship);
     expect(board.gameboard[0][0]).toStrictEqual([]);
   });
 
   test('place ship vertically', () => {
-    board.placeShip([9, 0], ship2);
+    board.placeShip([9, 0], false, ship2);
     expect(board.gameboard[9][0]).toMatchObject(ship2);
     expect(board.gameboard[0][0]).toStrictEqual([]);
   });
@@ -58,10 +58,13 @@ describe('Gameboard', () => {
     expect(board.allSunk()).toBe('all sunk');
   });
 
-  test('automatically place ships', () => {
+  describe('automatically place ships', () => {
     let autoShip = new Ship(4);
-    board.autoPlaceShips(autoShip);
-    console.log(board.gameboard);
+
+    test('automatically place ships', () => {
+      board.autoPlaceShips(autoShip);
+      console.log(board.gameboard);
+    });
   });
 });
 
