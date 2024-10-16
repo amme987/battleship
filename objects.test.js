@@ -38,6 +38,24 @@ describe('Gameboard', () => {
     expect(board.gameboard[0][0]).toStrictEqual([]);
   });
 
+  test('generates coordinates until ship can be placed', () => {
+    let autoShip = new Ship(2);
+
+    board.canPlaceShip = jest.fn();
+    board.canPlaceShip.mockReturnValue(true).mockReturnValueOnce(false);
+
+    board.generateCoordinates = jest.fn();
+    board.generateCoordinates.mockReturnValue({
+      horizontal: true,
+      row: 6,
+      col: 2,
+    });
+
+    board.autoPlaceShips(autoShip);
+    expect(board.canPlaceShip).toHaveBeenCalledTimes(2);
+    expect(board.gameboard[6][2]).toMatchObject(autoShip);
+  });
+
   test('receive attack', () => {
     board.receiveAttack([0, 0]);
     expect(board.gameboard[0][0]).toBe(false);
@@ -54,17 +72,10 @@ describe('Gameboard', () => {
     board.receiveAttack([0, 5]);
     board.receiveAttack([1, 5]);
     board.receiveAttack([2, 5]);
+    board.receiveAttack([6, 2]);
+    board.receiveAttack([7, 2]);
 
     expect(board.allSunk()).toBe('all sunk');
-  });
-
-  describe('automatically place ships', () => {
-    let autoShip = new Ship(4);
-
-    test('automatically place ships', () => {
-      board.autoPlaceShips(autoShip);
-      console.log(board.gameboard);
-    });
   });
 });
 

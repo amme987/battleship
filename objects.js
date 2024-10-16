@@ -22,25 +22,25 @@ export class Ship {
 export class Gameboard {
   gameboard = Array.from({ length: 10 }, () => Array(10).fill([]));
 
-  autoPlaceShips(ship) {
-    let range = 11 - ship.length;
+  generateCoordinates(length) {
+    let range = 11 - length;
     let horizontal = Math.random() < 0.5;
-    console.log(horizontal);
 
     // 0-range exclusive
     let row = Math.floor(Math.random() * range);
     let col = Math.floor(Math.random() * range);
 
-    console.log(row);
-    console.log(col);
+    return { horizontal, row, col };
+  }
 
-    if (this.canPlaceShip([row, col], horizontal, ship)) {
-      if (horizontal) {
-        this.placeShip([row, col], true, ship);
-      } else {
-        this.placeShip([row, col], false, ship);
-      }
+  autoPlaceShips(ship) {
+    let { horizontal, row, col } = this.generateCoordinates(ship.length);
+
+    while (!this.canPlaceShip([row, col], horizontal, ship)) {
+      ({ horizontal, row, col } = this.generateCoordinates(ship.length));
     }
+
+    this.placeShip([row, col], horizontal, ship);
   }
 
   placeShip([x, y], orientation, ship) {
@@ -55,6 +55,7 @@ export class Gameboard {
 
   // Make sure ship isn't placed on top of existing ship
   canPlaceShip([x, y], orientation, ship) {
+    console.log(x, y);
     for (let i = 0; i < ship.length; i++) {
       if (orientation && this.gameboard[x + i][y].length !== 0) {
         return false;
