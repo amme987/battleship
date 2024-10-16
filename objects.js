@@ -33,14 +33,16 @@ export class Gameboard {
     return { horizontal, row, col };
   }
 
-  autoPlaceShips(ship) {
-    let { horizontal, row, col } = this.generateCoordinates(ship.length);
+  autoPlaceShips(...ships) {
+    ships.forEach(ship => {
+      let { horizontal, row, col } = this.generateCoordinates(ship.length);
 
-    while (!this.canPlaceShip([row, col], horizontal, ship)) {
-      ({ horizontal, row, col } = this.generateCoordinates(ship.length));
-    }
+      while (!this.canPlaceShip([row, col], horizontal, ship)) {
+        ({ horizontal, row, col } = this.generateCoordinates(ship.length));
+      }
 
-    this.placeShip([row, col], horizontal, ship);
+      this.placeShip([row, col], horizontal, ship);
+    });
   }
 
   placeShip([x, y], orientation, ship) {
@@ -55,7 +57,6 @@ export class Gameboard {
 
   // Make sure ship isn't placed on top of existing ship
   canPlaceShip([x, y], orientation, ship) {
-    console.log(x, y);
     for (let i = 0; i < ship.length; i++) {
       if (orientation && this.gameboard[x + i][y].length !== 0) {
         return false;
@@ -100,11 +101,13 @@ export class Player {
   submarine = new Ship(3);
   patrol = new Ship(2);
 
-  ships = [
-    this.carrier,
-    this.battleship,
-    this.destroyer,
-    this.submarine,
-    this.patrol,
-  ];
+  autoPlaceShips() {
+    this.gameboard.autoPlaceShips(
+      this.carrier,
+      this.battleship,
+      this.destroyer,
+      this.submarine,
+      this.patrol
+    );
+  }
 }

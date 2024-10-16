@@ -82,4 +82,8 @@ describe('Gameboard', () => {
 test('player', () => {
   let player = new Player('Emma');
   expect(player.name).toBe('Emma');
+
+  // console.log(player.gameboard);
+  // player.autoPlaceShips();
+  // console.log(player.gameboard);
 });
