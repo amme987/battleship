@@ -2,3 +2,13 @@ input {
   appearance: none;
   border-width: 0 0 1px 0;
 }
+
+.board {
+  display: grid;
+  grid-template: repeat(10, 50px) / repeat(10, 50px);
+  /* border: 1px solid black; */
+}
+
+.board button {
+  /* border: 1px solid black; */
+}
